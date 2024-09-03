@@ -1,10 +1,11 @@
-const { clusterApiUrl, Connection } = require("@solana/web3.js") 
-const { WalletAdapterNetwork } = require('@solana/wallet-adapter-base')
-
-export const SOLANA_MAIN = clusterApiUrl(WalletAdapterNetwork.Mainnet);
-export const SOLANA_TEST = clusterApiUrl(WalletAdapterNetwork.Testnet);
-export const SOLANA_DEV = clusterApiUrl(WalletAdapterNetwork.Devnet);
-export const SOLANA_LOCAL = `http://127.0.0.1:8899`;
-
-export const NETWORK = SOLANA_LOCAL;
-export const CONNECTION = new Connection(NETWORK);
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CONNECTION = exports.NETWORK = exports.SOLANA_LOCAL = exports.SOLANA_DEV = exports.SOLANA_TEST = exports.SOLANA_MAIN = void 0;
+var _a = require("@solana/web3.js"), clusterApiUrl = _a.clusterApiUrl, Connection = _a.Connection;
+var WalletAdapterNetwork = require('@solana/wallet-adapter-base').WalletAdapterNetwork;
+exports.SOLANA_MAIN = clusterApiUrl(WalletAdapterNetwork.Mainnet);
+exports.SOLANA_TEST = clusterApiUrl(WalletAdapterNetwork.Testnet);
+exports.SOLANA_DEV = clusterApiUrl(WalletAdapterNetwork.Devnet);
+exports.SOLANA_LOCAL = "http://127.0.0.1:8899";
+exports.NETWORK = exports.SOLANA_LOCAL;
+exports.CONNECTION = new Connection(exports.NETWORK);
