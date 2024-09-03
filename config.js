@@ -8,9 +8,9 @@ module.exports = {
   expiresIn: 3600 * 72, // 3 days
   db_url: "mongodb://127.0.0.1:27017/raise",
   db_options: {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    // useNewUrlParser: true, //from 6 or higher version of mongoose
+    // useUnifiedTopology: true, // the same above
   },
   serviceUrl:
-    process.env.REACT_APP_SERVICE_URL || "http://192.168.146.191:5005/api",
+    process.env.REACT_APP_SERVICE_URL || "http://localhost:5005/api",
 };

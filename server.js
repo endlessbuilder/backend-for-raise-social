@@ -34,8 +34,8 @@ app.use(
 const db = process.env.MONGO_URI;
 mongoose
   .connect(db, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    // useNewUrlParser: true, // from 6 or higher version of mongoose
+    // useUnifiedTopology: true, // the same above
   })
   .then(() => {
     console.log("mongodb connected");

@@ -39,34 +39,82 @@ const lang = require("../utils/_lang/lang");
 //   });
 // };
 
-exports.downloadFile = function (req, res, next) {
-  const id = req.params.id;
-  const isPublic = !!req.query.isPublic;
+// exports.downloadFile = function (req, res, next) {
+//   const id = req.params.id;
+//   const isPublic = !!req.query.isPublic;
 
-  File.findOne({ _id: id }).exec(function (err, file) {
-    if (err || !file) {
-      console.error("Error fetching file:", err);
-      return res.status(400).json({ error: lang("fail_fetchall") });
-    }
+//   File.findOne({ _id: id }).exec(function (err, file) {
+//     if (err || !file) {
+//       console.error("Error fetching file:", err);
+//       return res.status(400).json({ error: lang("fail_fetchall") });
+//     }
 
-    upload.get_uploaded_attachment(file._id, isPublic, (err, data) => {
+//     upload.get_uploaded_attachment(file._id, isPublic, (err, data) => {
+//       if (err) {
+//         console.error("Error fetching attachment:", err);
+//         return res.status(400).send({ error: lang("fail_fetchall") });
+//       } else {
+//         res.writeHead(200, {
+//           "Content-Type": file.mime,
+//           "Cache-Control": "private, no-transform, no-store, must-revalidate",
+//           "Content-Disposition": contentDisposition(file.name),
+//           "Content-Length": file.filesize || 0,
+//           "Content-Transfer-Encoding": "binary",
+//         });
+
+//         res.end(data, "binary");
+//       }
+//     });
+//   });
+// };
+
+const getUploadedAttachment = (fileId, isPublic) => {
+  return new Promise((resolve, reject) => {
+    upload.get_uploaded_attachment(fileId, isPublic, (err, data) => {
       if (err) {
-        console.error("Error fetching attachment:", err);
-        return res.status(400).send({ error: lang("fail_fetchall") });
-      } else {
-        res.writeHead(200, {
-          "Content-Type": file.mime,
-          "Cache-Control": "private, no-transform, no-store, must-revalidate",
-          "Content-Disposition": contentDisposition(file.name),
-          "Content-Length": file.filesize || 0,
-          "Content-Transfer-Encoding": "binary",
-        });
-
-        res.end(data, "binary");
+        return reject(err);
       }
+      resolve(data);
     });
   });
 };
+
+
+exports.downloadFile = async function (req, res, next) {
+  const id = req.params.id;
+  const isPublic = !!req.query.isPublic;
+
+  try {
+    // Find the file in the database
+    const file = await File.findOne({ _id: id }).exec();
+    
+    // Check if the file exists
+    if (!file) {
+      console.error("Error fetching file: File not found");
+      return res.status(400).json({ error: lang("fail_fetchall") });
+    }
+
+    // Fetch the uploaded attachment
+    const data = await getUploadedAttachment(file._id, isPublic);
+
+    // Send the file as a response
+    res.writeHead(200, {
+      "Content-Type": file.mime,
+      "Cache-Control": "private, no-transform, no-store, must-revalidate",
+      "Content-Disposition": contentDisposition(file.name),
+      "Content-Length": file.filesize || 0,
+      "Content-Transfer-Encoding": "binary",
+    });
+
+    res.end(data, "binary");
+  } catch (err) {
+    // Handle any errors
+    console.error("Error:", err);
+    res.status(400).json({ error: lang("fail_fetchall") });
+  }
+};
+
+
 
 exports.uploadFiles = function (req, res, next) {
   console.log(req.files);
