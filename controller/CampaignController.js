@@ -133,7 +133,7 @@ exports.getAllCampaign = async (req, res) => {
 
 exports.getACampaign = async (req, res) => {
   try {
-    const campaign = await Campaign.find({ delete: "false", _id: req.params });
+    const campaign = await Campaign.find({ delete: "false", _id: req.params.id });
     res.status(200).json({ message: "Success", data: campaign });
   } catch (error) {
     // console.log(error);

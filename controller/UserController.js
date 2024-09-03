@@ -67,7 +67,6 @@ exports.login = async (req, res) => {
     },
   );
 };
-
 exports.logout = async (req, res) => {
   await User.findone({ email: req.body.email }).then(async (user) => {
     await user?.updateOne({
