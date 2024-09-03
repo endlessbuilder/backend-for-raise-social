@@ -2,9 +2,9 @@ const Donate = require("../models/DonateModel");
 const Campaign = require("../models/CampaignModel");
 const _ = require("lodash");
 const RaiseContractImpl = require("../utils/integration")
-const { CONNECTION } = require('../utils/endpoints')
+const CONNECTION = require('../utils/endpoints')
 
-const raiseContract = RaiseContractImpl.create(CONNECTION)
+// const raiseContract = RaiseContractImpl.create(CONNECTION)
 
 exports.createDonate = async (req, res) => {
   const newDonate = new Donate({

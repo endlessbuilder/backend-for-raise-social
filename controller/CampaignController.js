@@ -3,11 +3,12 @@ const _ = require("lodash");
 const mongoose = require("mongoose");
 const RaiseContractImpl = require("../utils/integration")
 const { CONNECTION } = require('../utils/endpoints')
+// import * as utils from '../utils/global'
 
-const raiseContract = RaiseContractImpl.create(CONNECTION)
-const backendPrivateKey = process.env.ADMIN_SECRET_KEY;
-const backendWalletKeypair = Keypair.fromSecretKey(bs58.decode(backendPrivateKey));
-raiseContract.setWalletKeypair(backendWalletKeypair);
+// const raiseContract = RaiseContractImpl.create(CONNECTION)
+// const backendPrivateKey = process.env.ADMIN_SECRET_KEY;
+// const backendWalletKeypair = Keypair.fromSecretKey(bs58.decode(backendPrivateKey));
+// raiseContract.setWalletKeypair(backendWalletKeypair);
 
 exports.createCampaign = async (req, res) => {
   const newCampaign = new Campaign({
@@ -29,24 +30,24 @@ exports.createCampaign = async (req, res) => {
     },
   });
 
-  let goal = utils.toTokenAmount(5, 9)
-    let campaignDuration = new anchor.BN(3 * 30 * 24 * 3600)
-    let minDepositAmount = utils.toTokenAmount(1, 9)
-    try {
-      let { txId } = await raiseContract.initializeCampaign(
-        goal,
-        campaignDuration,
-        minDepositAmount,
+  // let goal = utils.toTokenAmount(req.body.totalAmount, 9)
+  //   let campaignDuration = new anchor.BN(3 * 30 * 24 * 3600)
+  //   let minDepositAmount = utils.toTokenAmount(1, 9)
+  //   try {
+  //     let { txId } = await raiseContract.initializeCampaign(
+  //       goal,
+  //       campaignDuration,
+  //       minDepositAmount,
 
-        creatorKeypair
-      )
+  //       creatorKeypair
+  //     )
 
-      console.log('>>> initializeCampaign txId = ', txId)
-    } catch (e) {
-      console.log('>>> initializeCampaign error # \n ', e)
-      assert(false, 'initializeCampaign error')
-    }
-    
+  //     console.log('>>> initializeCampaign txId = ', txId)
+  //   } catch (e) {
+  //     console.log('>>> initializeCampaign error # \n ', e)
+  //     assert(false, 'initializeCampaign error')
+  //   }
+
   await newCampaign.save((err) => {
     if (err) {
       return res.status(500).json({ message: err.message });
