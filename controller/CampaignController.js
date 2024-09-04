@@ -11,53 +11,82 @@ const { CONNECTION } = require('../utils/endpoints')
 // raiseContract.setWalletKeypair(backendWalletKeypair);
 
 exports.createCampaign = async (req, res) => {
-  const newCampaign = new Campaign({
-    title: req.body.title,
-    file: req.body.file,
-    countryId: req.body.countryId,
-    categoryId: req.body.categoryId,
-    createrId: req.body.createrid,
-    amount: req.body.amount,
-    totalAmount: req.body.totalAmount,
-    kyc: {
-      file: req.body.kyc,
-      verify: "pending",
-    },
-    content: {
-      _id: new mongoose.Types.ObjectId(),
-      text: req.body.text,
-      delete: false,
-    },
-  });
+  try{
+    const newCampaign = new Campaign({
+      title: req.body.title,
+      file: req.body.file,
+      countryId: req.body.countryId,
+      categoryId: req.body.categoryId,
+      createrId: req.body.createrid,
+      amount: req.body.amount,
+      totalAmount: req.body.totalAmount,
+      kyc: {
+        file: req.body.kyc,
+        verify: "pending",
+      },
+      content: {
+        _id: new mongoose.Types.ObjectId(),
+        text: req.body.text,
+        delete: false,
+      },
+    });
+    await newCampaign.save();
+  } catch (error) {
+    console.error('Error creating campaign:', error);
+    res.status(500).json({ message: 'Failed to create campaign' });
+  }
+}
 
-  // let goal = utils.toTokenAmount(req.body.totalAmount, 9)
-  //   let campaignDuration = new anchor.BN(3 * 30 * 24 * 3600)
-  //   let minDepositAmount = utils.toTokenAmount(1, 9)
-  //   try {
-  //     let { txId } = await raiseContract.initializeCampaign(
-  //       goal,
-  //       campaignDuration,
-  //       minDepositAmount,
+// exports.createCampaign = async (req, res) => {
+//   const newCampaign = new Campaign({
+//     title: req.body.title,
+//     file: req.body.file,
+//     countryId: req.body.countryId,
+//     categoryId: req.body.categoryId,
+//     createrId: req.body.createrid,
+//     amount: req.body.amount,
+//     totalAmount: req.body.totalAmount,
+//     kyc: {
+//       file: req.body.kyc,
+//       verify: "pending",
+//     },
+//     content: {
+//       _id: new mongoose.Types.ObjectId(),
+//       text: req.body.text,
+//       delete: false,
+//     },
+//   });
 
-  //       creatorKeypair
-  //     )
+//   console.log("haha", newCampaign);
 
-  //     console.log('>>> initializeCampaign txId = ', txId)
-  //   } catch (e) {
-  //     console.log('>>> initializeCampaign error # \n ', e)
-  //     assert(false, 'initializeCampaign error')
-  //   }
+//   // let goal = utils.toTokenAmount(req.body.totalAmount, 9)
+//   //   let campaignDuration = new anchor.BN(3 * 30 * 24 * 3600)
+//   //   let minDepositAmount = utils.toTokenAmount(1, 9)
+//   //   try {
+//   //     let { txId } = await raiseContract.initializeCampaign(
+//   //       goal,
+//   //       campaignDuration,
+//   //       minDepositAmount,
 
-  await newCampaign.save((err) => {
-    if (err) {
-      return res.status(500).json({ message: err.message });
-    } else {
-      return res.status(200).json({
-        message: "Create Campaign successfully!",
-      });
-    }
-  });
-};
+//   //       creatorKeypair
+//   //     )
+
+//   //     console.log('>>> initializeCampaign txId = ', txId)
+//   //   } catch (e) {
+//   //     console.log('>>> initializeCampaign error # \n ', e)
+//   //     assert(false, 'initializeCampaign error')
+//   //   }
+
+//   await newCampaign.save((err) => {
+//     if (err) {
+//       return res.status(500).json({ message: err.message });
+//     } else {
+//       return res.status(200).json({
+//         message: "Create Campaign successfully!",
+//       });
+//     }
+//   });
+// };
 
 exports.acceptKyc = async (req, res) => {
   try {

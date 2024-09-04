@@ -26,9 +26,13 @@ const CampaignSchema = new Schema(
       ref: "User",
     },
     file: {
-      type: Schema.Types.ObjectId,
-      ref: "File",
+      type: String,
+      // ref: "File",
     },
+    // file: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "File",
+    // },
     amount: {
       type: Number,
     },
