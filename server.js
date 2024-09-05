@@ -31,11 +31,13 @@ app.use(
 );
 
 // Connect to MongoDB
+console.log(process.env.MONGO_URI)
 const db = process.env.MONGO_URI;
 mongoose
   .connect(db, {
     // useNewUrlParser: true, // from 6 or higher version of mongoose
     // useUnifiedTopology: true, // the same above
+    connectTimeoutMS: 30000, // Increase timeout to 30 seconds
   })
   .then(() => {
     console.log("mongodb connected");
