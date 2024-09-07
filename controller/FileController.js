@@ -1,10 +1,14 @@
 const async = require("async");
+const fs=require("fs");
 const contentDisposition = require("content-disposition");
 
 const File = require("../models/FileModel");
 const upload = require("../utils/upload");
 const validation = require("../utils/validation.js");
 const lang = require("../utils/_lang/lang");
+
+const path = require("path");
+const config = require("../config/file");
 
 // exports.downloadFile = function (req, res, next) {
 //   const id = req.params.id;
@@ -117,7 +121,7 @@ exports.downloadFile = async function (req, res, next) {
 
 
 exports.uploadFiles = function (req, res, next) {
-  console.log(req.files);
+  // console.log("Dream = ",req.files);
 
   let files = req.files;
   if (files?.message) {
@@ -133,6 +137,13 @@ exports.uploadFiles = function (req, res, next) {
   }
 
   let keys = Object.keys(files);
+
+  // Ensure upload directory exists
+  const uploadDir = path.join(config.upload, config.upload_attachment);
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
+
 
   // async call
   let pos = 0;
@@ -153,13 +164,19 @@ exports.uploadFiles = function (req, res, next) {
               md5: file.md5,
               filesize: file.size,
             });
-            mFile.save((err1, created) => {
-              if (err1) {
-                callback(err1);
-              } else {
-                callback(null, created);
-              }
-            });
+            mFile
+              .save()
+              .then((createdFile) => {
+                callback(null, createdFile);
+              })
+              .catch((err) => console.log(err));
+            // mFile.save((err1, created) => {
+            //   if (err1) {
+            //     callback(err1);
+            //   } else {
+            //     callback(null, created);
+            //   }
+            // });
           },
           function (createdFile, callback) {
             upload.move_to_upload(file, createdFile, callback);

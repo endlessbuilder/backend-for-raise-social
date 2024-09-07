@@ -26,8 +26,12 @@ exports.move_to_upload = function move_to_upload(fileObj, mFile, callback) {
     callback('invalid file id = ' + id);
     return;
   }
-  fileObj.mv(folderPath + '/' + mFile._id , function (err) {
+  
+  const filename = mFile._id + '.' + mFile.name.split('.')[mFile.name.split('.').length - 1];
+
+  fileObj.mv(folderPath + '/' + filename , function (err) {
     if (err) {
+      console.log('file move failed = ', err);
       callback('file move failed = ', err);
     } else {
       callback(null, mFile);

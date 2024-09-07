@@ -30,6 +30,7 @@ exports.createCampaign = async (req, res) => {
         delete: false,
       },
     });
+    console.log("haha", newCampaign);
     await newCampaign.save();
   } catch (error) {
     console.error('Error creating campaign:', error);
