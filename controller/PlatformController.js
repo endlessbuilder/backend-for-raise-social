@@ -13,7 +13,7 @@ const backendWalletKeypair = Keypair.fromSecretKey(bs58.decode(backendPrivateKey
 
 raiseContract.setWalletKeypair(backendWalletKeypair);
 
-exports.createCampaign = async (req, res) => {
+exports.createPlatform = async (req, res) => {
     try {
         try {
             let { txId } = await raiseContract.initializePlatform(
@@ -22,6 +22,7 @@ exports.createCampaign = async (req, res) => {
             );
 
             console.log('>>> initializePlatform txId = ', txId);
+            res.status(200).json({ message: 'Success', txId: txId });
         } catch (e) {
             console.log('>>> initializePlatform error # \n ', e);
             assert(false, 'initializePlatform error');

@@ -1,13 +1,11 @@
-const { Program, BN, AnchorProvider, Wallet, Idl } = require('@coral-xyz/anchor');
+const { Program, AnchorProvider, Wallet } = require('@coral-xyz/anchor');
 const {
   PublicKey,
   Keypair,
   Connection,
   SystemProgram,
   SYSVAR_RENT_PUBKEY,
-  SYSVAR_INSTRUCTIONS_PUBKEY,
-  Transaction
-} = require('@solana/web3.js');
+  SYSVAR_INSTRUCTIONS_PUBKEY} = require('@solana/web3.js');
 const { TOKEN_PROGRAM_ID } = require('@solana/spl-token');
 
 const idl = require('../idl/raise_contract.json');
@@ -195,8 +193,6 @@ class RaiseContractImpl {
   }
 
   async initializeCampaign(goal, campaignDuration, minDepositAmount, creator) {
-    let platform = this.getPlatform();
-    let platformAuthority = this.getPlatformAuthority();
     let campaign = this.getCampaign(creator.publicKey);
     let campaignAuthority = this.getCampaignAuthority();
 
@@ -226,8 +222,6 @@ class RaiseContractImpl {
   }
 
   async fundToCampaign(fundAmount, donor, creator) {
-    let platform = this.getPlatform();
-    let platformAuthority = this.getPlatformAuthority();
     let campaign = this.getCampaign(creator);
     let campaignAuthority = this.getCampaignAuthority();
     let donorInfo = this.getDonor(campaign, donor.publicKey);
@@ -317,7 +311,6 @@ class RaiseContractImpl {
 
   async setCampaignUnlocked(creator) {
     let campaign = this.getCampaign(creator);
-    let campaignAuthority = this.getCampaignAuthority();
 
     let accounts = {
       creator,
