@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const CampaignController = require("../controller/CampaignController");
+console.log("campaign router");
 
 router
   //Create campaign

@@ -35,7 +35,8 @@ class RaiseContractImpl {
     );
     const program = new Program(
       idl,
-      new PublicKey(provider.wallet.publicKey)
+      idl.metadata.address,
+      provider
     );
 
     return new RaiseContractImpl(program, connection);
@@ -108,14 +109,19 @@ class RaiseContractImpl {
     let platform = this.getPlatform();
     let platformAuthority = this.getPlatformAuthority();
 
+    console.log(">>> connection : ", this.connection._rpcEndpoint)
+    console.log(">>> program Id : ", this.program.programId.toBase58())
+    console.log(">>> platform : ", platform.toBase58())
+    console.log(">>> platformAuthority : ", platformAuthority.toBase58())
+
     let accounts = {
-      admin,
-      platform,
-      platformAuthority,
+      admin: admin,
+      platform: platform,
+      platformAuthority: platformAuthority,
       ...defaultProgramAccounts
     };
 
-    let params = { fee };
+    let params = { fee: fee };
 
     let txId = await this.program.methods
       .initializePlatform(params)

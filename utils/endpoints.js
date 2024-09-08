@@ -8,4 +8,4 @@ exports.SOLANA_TEST = clusterApiUrl(WalletAdapterNetwork.Testnet);
 exports.SOLANA_DEV = clusterApiUrl(WalletAdapterNetwork.Devnet);
 exports.SOLANA_LOCAL = "http://127.0.0.1:8899";
 exports.NETWORK = exports.SOLANA_LOCAL;
-exports.CONNECTION = new Connection(exports.NETWORK);
+exports.CONNECTION = new Connection(exports.SOLANA_TEST);
