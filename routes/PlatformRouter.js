@@ -4,7 +4,7 @@ console.log("platform router");
 
 router
   //Create platform
-  .post("/create", PlatformController.createCampaign)
+  .post("/create", PlatformController.createPlatform)
   //set platform admin
   .post("/setadim", PlatformController.setAdmin)
   //set platform fee

@@ -3,11 +3,16 @@ const _ = require("lodash");
 const mongoose = require("mongoose");
 const RaiseContractImpl = require("../utils/integration")
 const { CONNECTION } = require('../utils/endpoints')
-// import * as utils from '../utils/global'
+const { Keypair, PublicKey } = require('@solana/web3.js')
+const bs58 = require('@coral-xyz/anchor/dist/cjs/utils/bytes/bs58');
+const { BN } = require('@coral-xyz/anchor')
 
-// const raiseContract = RaiseContractImpl.create(CONNECTION)
+// console.log(">>> connection : ", CONNECTION._rpcEndpoint)
+
+// const raiseContract = RaiseContractImpl.create(CONNECTION._rpcEndpoint)
 // const backendPrivateKey = process.env.ADMIN_SECRET_KEY;
 // const backendWalletKeypair = Keypair.fromSecretKey(bs58.decode(backendPrivateKey));
+
 // raiseContract.setWalletKeypair(backendWalletKeypair);
 
 exports.createCampaign = async (req, res) => {
@@ -31,6 +36,9 @@ exports.createCampaign = async (req, res) => {
       },
     });
     await newCampaign.save();
+
+    res.status(200).json({message: "Success"})
+
   } catch (error) {
     console.error('Error creating campaign:', error);
     res.status(500).json({ message: 'Failed to create campaign' });
