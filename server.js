@@ -19,6 +19,12 @@ const PlatformRouter = require("./routes/PlatformRouter");
 
 const app = express();
 
+
+app.use(express.json({ limit: '50mb' }));
+
+// Increase limit for URL-encoded data (forms)
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
 // Use fileUpload middleware
 app.use(fileUpload({
   useTempFiles: true,

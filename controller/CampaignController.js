@@ -35,6 +35,7 @@ exports.createCampaign = async (req, res) => {
         delete: false,
       },
     });
+    console.log("haha", newCampaign);
     await newCampaign.save();
 
     res.status(200).json({message: "Success"})

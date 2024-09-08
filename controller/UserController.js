@@ -68,16 +68,27 @@ exports.login = async (req, res) => {
   );
 };
 exports.logout = async (req, res) => {
-  await User.findone({ email: req.body.email }).then(async (user) => {
-    await user?.updateOne({
-      $set: { status: false },
-    });
+  try {
+    // Find the user by their email (You might use the token to identify the user in some systems)
+    const user = await User.findOne({ email: req.body.email });
+    
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    // Optionally update user status to "logged out"
+    await user.updateOne({ $set: { status: false } });
+
+    // Optional: If you want to invalidate the token, implement token blacklisting or just rely on the token's expiration.
     res.json({
-      success: "true",
-      message: "Success",
-      user: user,
+      success: true,
+      message: "Logout successful.",
     });
-  });
+    
+  } catch (error) {
+    console.error("Error during logout: ", error);
+    res.status(500).json({ message: "Server error, please try again later." });
+  }
 };
 
 exports.tokenlogin = async (req, res) => {
