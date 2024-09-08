@@ -4,6 +4,8 @@ require("../config/passport");
 const requireAuth = passport.authenticate("jwt", { session: false });
 const UserCtr = require("../controller/UserController");
 
+console.log("user router");
+
 router
   //register
   .post("/register", UserCtr.register)

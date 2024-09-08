@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const CategoryController = require("../controller/CategoryController");
+console.log("category router");
 
 router
   //create Category  

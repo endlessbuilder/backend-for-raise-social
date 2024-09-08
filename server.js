@@ -15,6 +15,7 @@ const CampaignRouter = require("./routes/CampaignRouter");
 const CategoryRouter = require("./routes/CategoryRouter");
 const CountryRouter = require("./routes/CountryRouter");
 const FileRouter = require("./routes/FileRouter");
+const PlatformRouter = require("./routes/PlatformRouter");
 
 const app = express();
 
@@ -31,11 +32,13 @@ app.use(
 );
 
 // Connect to MongoDB
+console.log(process.env.MONGO_URI)
 const db = process.env.MONGO_URI;
 mongoose
   .connect(db, {
     // useNewUrlParser: true, // from 6 or higher version of mongoose
     // useUnifiedTopology: true, // the same above
+    connectTimeoutMS: 30000, // Increase timeout to 30 seconds
   })
   .then(() => {
     console.log("mongodb connected");
@@ -58,6 +61,7 @@ app.use("/api/", UserRouter);
 app.use("/api/post/", PostRouter);
 app.use("/api/donate/", DonateRouter);
 app.use("/api/campaign/", CampaignRouter);
+app.use("/api/platform/", PlatformRouter);
 app.use("/api/category/", CategoryRouter);
 app.use("/api/location/", CountryRouter);
 app.use("/api/file/", FileRouter);

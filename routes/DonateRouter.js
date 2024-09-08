@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const DonateController = require("../controller/DonateController");
 
-console.log("donaterouter");
+console.log("donate router");
+
 router
   //Donate
   .post("/create", DonateController.createDonate)
