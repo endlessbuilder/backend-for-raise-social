@@ -7,13 +7,13 @@ const { Keypair, PublicKey } = require('@solana/web3.js')
 const bs58 = require('@coral-xyz/anchor/dist/cjs/utils/bytes/bs58');
 const { BN } = require('@coral-xyz/anchor')
 
-console.log(">>> connection : ", CONNECTION._rpcEndpoint)
+// console.log(">>> connection : ", CONNECTION._rpcEndpoint)
 
-const raiseContract = RaiseContractImpl.create(CONNECTION._rpcEndpoint)
-const backendPrivateKey = process.env.ADMIN_SECRET_KEY;
-const backendWalletKeypair = Keypair.fromSecretKey(bs58.decode(backendPrivateKey));
+// const raiseContract = RaiseContractImpl.create(CONNECTION._rpcEndpoint)
+// const backendPrivateKey = process.env.ADMIN_SECRET_KEY;
+// const backendWalletKeypair = Keypair.fromSecretKey(bs58.decode(backendPrivateKey));
 
-raiseContract.setWalletKeypair(backendWalletKeypair);
+// raiseContract.setWalletKeypair(backendWalletKeypair);
 
 exports.createCampaign = async (req, res) => {
   try{
