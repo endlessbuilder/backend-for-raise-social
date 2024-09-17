@@ -6,7 +6,7 @@ module.exports = {
   allowed_origin: ["https://frontend-for-raise-social.vercel.app"],
 
   expiresIn: 3600 * 72, // 3 days
-  db_url: "mongodb+srv://admin:solana@raise-shard-00-00.3twoe.mongodb.net/raise",
+  db_url: "mongodb+srv://admin:solana@raise.3twoe.mongodb.net/raise?retryWrites=true&w=majority&appName=Raise",
   db_options: {
     // useNewUrlParser: true, //from 6 or higher version of mongoose
     // useUnifiedTopology: true, // the same above

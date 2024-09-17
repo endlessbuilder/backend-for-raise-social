@@ -1,5 +1,5 @@
 module.exports = {
   MONGOURI: process.env.MONGOURI,
   secretOrKey: "secret",
-  allowed_origin: ["http://localhost:3000", "https://localhost:4000"],
+  allowed_origin: ["https://frontend-for-raise-social.vercel.app"],
 };
