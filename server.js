@@ -31,11 +31,11 @@ app.use(fileUpload({
   tempFileDir: "/tmp/",
 }));
 
-app.use(
-  cors({
-    origin: ["*"], // Update as necessary  "https://frontend-for-raise-social.vercel.app"
-  }),
-);
+// app.use(
+//   cors({
+//     origin: ["*"], // Update as necessary  "https://frontend-for-raise-social.vercel.app"
+//   }),
+// );
 
 // Connect to MongoDB
 console.log(process.env.MONGO_URI)
