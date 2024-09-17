@@ -33,7 +33,7 @@ app.use(fileUpload({
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://localhost:4000"], // Update as necessary
+    origin: ["https://frontend-for-raise-social.vercel.app:3000", "https://frontend-for-raise-social.vercel.app:4000"], // Update as necessary
   }),
 );
 
