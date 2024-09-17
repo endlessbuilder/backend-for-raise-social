@@ -12,5 +12,5 @@ module.exports = {
     // useUnifiedTopology: true, // the same above
   },
   serviceUrl:
-    process.env.REACT_APP_SERVICE_URL || "https://frontend-for-raise-social.vercel.app/api",
+    process.env.REACT_APP_SERVICE_URL || "https://backend-for-raise-social.vercel.app/api",
 };
