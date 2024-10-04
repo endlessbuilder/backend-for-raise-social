@@ -31,28 +31,20 @@ app.use(fileUpload({
   tempFileDir: "/tmp/",
 }));
 
-app.use(
-  cors(),
-);
+// app.use(
+//   cors({
+//     origin: ["*"], // Update as necessary  "https://frontend-for-raise-social.vercel.app"
+//   }),
+// );
 
-// const allowedOrigins = [
-//   'http://localhost:3000', // First frontend
-//   'https://frontend-for-raise-social.vercel.app',    // Second frontend
-// ];
+app.use(cors());
 
-// app.use(cors({
-//   origin: function(origin, callback) {
-//     // Allow requests with no origin (like mobile apps or curl requests)
-//     if (!origin) return callback(null, true);
-//     if (allowedOrigins.indexOf(origin) === -1) {
-//       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-//       return callback(new Error(msg), false);
-//     }
-//     return callback(null, true);
-//   },
-//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//   credentials: true, // if you need to allow credentials
-// }));
+
+app.use(cors({
+  origin: 'http://localhost:3000', // Allow your frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
+  credentials: true, // Allow credentials (if needed)
+}));
 
 // Connect to MongoDB
 console.log(process.env.MONGO_URI)
