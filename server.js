@@ -32,9 +32,7 @@ app.use(fileUpload({
 }));
 
 app.use(
-  cors({
-    origin: ["*"], // Update as necessary  "https://frontend-for-raise-social.vercel.app"
-  }),
+  cors(),
 );
 
 // const allowedOrigins = [
