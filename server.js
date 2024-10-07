@@ -38,6 +38,17 @@ app.use(
   }),
 );
 
+app.use(cors());
+
+
+app.use(cors({
+  origin: 'http://localhost:3000', // Allow your frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
+  credentials: true, // Allow credentials (if needed)
+}));
+
+app.options('*', cors());
+
 // Connect to MongoDB
 console.log(process.env.MONGO_URI)
 const db = process.env.MONGO_URI;
